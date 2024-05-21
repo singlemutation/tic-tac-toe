@@ -17,8 +17,8 @@ end
 
 class Game
   def initialize
-    @player1 = Player1.new
-    @player2 = Player2.new
+    @player1 = Player.new(1, 'x')
+    @player2 = Player.new(2, 'o')
     puts "\n"
     puts '-----------'
     puts "Let's play!"
@@ -28,19 +28,29 @@ class Game
   end
 end
 
-class Player1
-  def initialize
-    puts 'Hello, player 1, what is your name?'
-    @name = gets.chomp
-    puts "Hello, #{@name}! You're x!"
-  end
-end
+# class Player1
+#   def initialize
+#     puts 'Hello, player 1, what is your name?'
+#     @name = gets.chomp
+#     puts "Hello, #{@name}! You're x!"
+#   end
+# end
 
-class Player2
-  def initialize
-    puts 'Hello, player 2, what is your name?'
+# class Player2
+#   def initialize
+#     puts 'Hello, player 2, what is your name?'
+#     @name = gets.chomp
+#     puts "Hello, #{@name}! You're o!"
+#   end
+# end
+
+class Player
+  def initialize(num, sym)
+    @num = num
+    @sym = sym
+    puts "Hello, player #{@num}, what is your name?"
     @name = gets.chomp
-    puts "Hello, #{@name}! You're o!"
+    puts "Hello, #{@name}, you will be #{@sym}!"
   end
 end
 
