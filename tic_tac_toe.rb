@@ -1,4 +1,4 @@
-class Game
+class Board
   def initialize
     @board = [
       [1, 2, 3],
@@ -15,4 +15,33 @@ class Game
   end
 end
 
-game = Game.new
+class Game
+  def initialize
+    @player1 = Player1.new
+    @player2 = Player2.new
+    puts "\n"
+    puts '-----------'
+    puts "Let's play!"
+    puts '-----------'
+    puts "\n"
+    @board = Board.new
+  end
+end
+
+class Player1
+  def initialize
+    puts 'Hello, player 1, what is your name?'
+    @name = gets.chomp
+    puts "Hello, #{@name}! You're x!"
+  end
+end
+
+class Player2
+  def initialize
+    puts 'Hello, player 2, what is your name?'
+    @name = gets.chomp
+    puts "Hello, #{@name}! You're o!"
+  end
+end
+
+Game.new
