@@ -10,9 +10,9 @@ class Game
 
   def print_board(board)
     puts " #{board[0][0]}  |  #{board[0][1]}  |  #{board[0][2]}"
-    puts "----+-----+----"
+    puts '----+-----+----'
     puts " #{board[1][0]}  |  #{board[1][1]}  |  #{board[1][2]}"
-    puts "----+-----+----"
+    puts '----+-----+----'
     puts " #{board[2][0]}  |  #{board[2][1]}  |  #{board[2][2]}"
   end
 
@@ -39,9 +39,8 @@ class Game
     until @game == 'won'
       change_board(1, 'X')
       game_won?('X')
-      if @game == 'won'
-        return @game == 'won'
-      end
+      return @game == 'won' if @game == 'won'
+
       change_board(2, 'O')
       game_won?('O')
     end
