@@ -58,6 +58,10 @@ class Game
       puts "                 #{x} WINS!"
       @game = 'won'
     end
+    if (@board.flatten & (1..9).to_a).none?
+      puts "It's a DRAW!"
+      @game = 'won'
+    end
   end
 end
 game = Game.new
