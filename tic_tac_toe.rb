@@ -1,20 +1,6 @@
-class Board
-  def initialize
-    @board = [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9]
-    ]
-    print_board
-  end
+# frozen_string_literal: true
 
-  def print_board
-    p @board[0]
-    p @board[1]
-    p @board[2]
-  end
-end
-
+# Start a game by creating 2 players and a board
 class Game
   def initialize
     @player1 = Player.new(1, 'x')
@@ -24,26 +10,73 @@ class Game
     puts "Let's play!"
     puts '-----------'
     puts "\n"
-    @board = Board.new
+    make_board
+    print_board(@board)
+    # round
+  end
+
+  def make_board
+    @board = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]
+    ]
+  end
+
+  def print_board(board)
+    p board[0]
+    p board[1]
+    p board[2]
+  end
+
+  def change_board(player, sym)
+    choice(player)
+    new_board = @board.map! do |row|
+      row.map do |num|
+        num == @choice ? sym : num
+      end
+    end
+    print_board(new_board)
+  end
+
+  def play_game
+    @game = nil
+    until @game == 'won'
+      change_board(@player1, 'x')
+      game_won?('x')
+      change_board(@player2, 'o')
+      game_won?('o')
+    end
+  end
+
+  def choice(player)
+    @choice = player.player_choice
+  end
+
+  # def round
+  #   2.times do
+  #     choice(@player1)
+  #     print_board
+  #     choice(@player2)
+  #     print_board
+  # end
+  # end
+  def game_won?(x)
+    if @board[0] == [x, x, x] ||
+       @board[1] == [x, x, x] ||
+       @board[2] == [x, x, x] ||
+       (@board[0][0] == x && @board[1][0] == x && @board[2][0] == x) ||
+       (@board[0][1] == x && @board[1][1] == x && @board[2][1] == x) ||
+       (@board[0][2] == x && @board[1][2] == x && @board[2][2] == x) ||
+       (@board[0][0] == x && @board[1][1] == x && @board[2][2] == x) ||
+       (@board[0][2] == x && @board[1][1] == x && @board[2][0] == x)
+      puts "#{x} wins"
+      @game = 'won'
+    end
   end
 end
 
-# class Player1
-#   def initialize
-#     puts 'Hello, player 1, what is your name?'
-#     @name = gets.chomp
-#     puts "Hello, #{@name}! You're x!"
-#   end
-# end
-
-# class Player2
-#   def initialize
-#     puts 'Hello, player 2, what is your name?'
-#     @name = gets.chomp
-#     puts "Hello, #{@name}! You're o!"
-#   end
-# end
-
+# Create players
 class Player
   def initialize(num, sym)
     @num = num
@@ -52,6 +85,15 @@ class Player
     @name = gets.chomp
     puts "Hello, #{@name}, you will be #{@sym}!"
   end
+
+  def player_choice
+    @choice = 0
+    until @choice.between?(1, 9)
+      puts "#{@name}'s choice:"
+      @choice = gets.chomp.to_i
+    end
+  end
 end
 
-Game.new
+game = Game.new
+game.play_game
